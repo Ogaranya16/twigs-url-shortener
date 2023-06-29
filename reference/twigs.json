@@ -1,0 +1,451 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "2bnjr2xtnz1q0"
+  },
+  "info": {
+    "title": "twigs",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://twigs-url-shortener.stoplight.io"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "parameters": [],
+      "get": {
+        "summary": "Get User Info by User ID",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "User Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "Get User Alice Smith": {
+                    "value": {
+                      "id": 142,
+                      "firstName": "Alice",
+                      "lastName": "Smith",
+                      "email": "alice.smith@gmail.com",
+                      "dateOfBirth": "1997-10-31",
+                      "emailVerified": true,
+                      "signUpDate": "2019-08-24"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found"
+          }
+        },
+        "operationId": "get-users-userId",
+        "description": "Retrieve the information of the user with the matching user ID.",
+        "x-internal": true
+      },
+      "patch": {
+        "summary": "Update User Information",
+        "operationId": "patch-users-userId",
+        "responses": {
+          "200": {
+            "description": "User Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "Updated User Rebecca Baker": {
+                    "value": {
+                      "id": 13,
+                      "firstName": "Rebecca",
+                      "lastName": "Baker",
+                      "email": "rebecca@gmail.com",
+                      "dateOfBirth": "1985-10-02",
+                      "emailVerified": false,
+                      "createDate": "2019-08-24"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found"
+          },
+          "409": {
+            "description": "Email Already Taken"
+          }
+        },
+        "description": "Update the information of an existing user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "If a new email is given, the user's email verified property will be set to false."
+                  },
+                  "dateOfBirth": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Update First Name": {
+                  "value": {
+                    "firstName": "Rebecca"
+                  }
+                },
+                "Update Email": {
+                  "value": {
+                    "email": "rebecca@gmail.com"
+                  }
+                },
+                "Update Last Name & Date of Birth": {
+                  "value": {
+                    "lastName": "Baker",
+                    "dateOfBirth": "1985-10-02"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Patch user properties to update."
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Create New User",
+        "operationId": "post-user",
+        "responses": {
+          "200": {
+            "description": "User Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "New User Bob Fellow": {
+                    "value": {
+                      "id": 12,
+                      "firstName": "Bob",
+                      "lastName": "Fellow",
+                      "email": "bob.fellow@gmail.com",
+                      "dateOfBirth": "1996-08-24",
+                      "emailVerified": false,
+                      "createDate": "2020-11-18"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Required Information"
+          },
+          "409": {
+            "description": "Email Already Taken"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "userName": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "phlba4hpultki"
+                    }
+                  },
+                  "password": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "s6vzk36jxq6cg"
+                    }
+                  }
+                },
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "email",
+                  "userName",
+                  "password"
+                ]
+              },
+              "examples": {
+                "Create User Bob Fellow": {
+                  "value": {
+                    "firstName": "Bob",
+                    "lastName": "Fellow",
+                    "email": "bob.fellow@gmail.com",
+                    "dateOfBirth": "1996-08-24"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": "Post the necessary fields for the API to create a new user."
+        },
+        "description": "Create a new user.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "https://twigs-url-shortener.onrender.com/users"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query"
+          }
+        ]
+      }
+    },
+    "/shorten": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-shorten"
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-shorten",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "https://twigs-url-shortener/shorten"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "urlId": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "nv94y0nwvc51x"
+                    }
+                  },
+                  "origUrl": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "nm5bd6jgk75nn"
+                    }
+                  },
+                  "shortUrl": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "ftc25w4x0c364"
+                    }
+                  },
+                  "clicks": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "fic8vdpgidr56"
+                    }
+                  },
+                  "date": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "t1i2imwdzco23"
+                    }
+                  }
+                },
+                "required": [
+                  "urlId",
+                  "origUrl",
+                  "shortUrl",
+                  "clicks"
+                ]
+              }
+            }
+          }
+        },
+        "x-internal": true,
+        "description": "to post the long url and get a shortened one"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "title": "User",
+        "type": "object",
+        "examples": [
+          {
+            "id": 142,
+            "firstName": "Alice",
+            "lastName": "Smith",
+            "email": "alice.smith@gmail.com",
+            "dateOfBirth": "1997-10-31",
+            "emailVerified": true,
+            "signUpDate": "2019-08-24"
+          }
+        ],
+        "x-stoplight": {
+          "id": "dohedi5c2nwm6"
+        },
+        "x-internal": true,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the given user.",
+            "x-stoplight": {
+              "id": "bf15kr6a9c2zi"
+            }
+          },
+          "firstName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "3zg8vz1om8vyc"
+            }
+          },
+          "lastName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "99cd63vd7yc3h"
+            }
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "x-stoplight": {
+              "id": "2koxrx3u54hob"
+            }
+          },
+          "password": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "wkjt0drhyqr02"
+            },
+            "description": "minLength: 8\r\n"
+          },
+          "userName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "soezikgl6hdzu"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "password",
+          "userName"
+        ]
+      },
+      "shortUrls.js": {
+        "title": "shortUrls.js",
+        "x-stoplight": {
+          "id": "sdjzpj2xa7fig"
+        },
+        "type": "object",
+        "properties": {
+          "urlId": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "2pfnh7gx4e64g"
+            }
+          },
+          "origUrl": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "wipk7xsekj479"
+            }
+          },
+          "shortUrl": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "putoy0qu80im6"
+            }
+          },
+          "clicks": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "00k8jx72c8ga8"
+            }
+          },
+          "date": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "58rwexfxs59q0"
+            }
+          }
+        },
+        "required": [
+          "urlId",
+          "origUrl",
+          "shortUrl",
+          "clicks"
+        ],
+        "examples": [
+          {
+            "urlId": "string",
+            "origUrl": "string",
+            "shortUrl": "string",
+            "clicks": "string",
+            "date": "string"
+          }
+        ],
+        "x-internal": true
+      }
+    },
+    "securitySchemes": {}
+  },
+  "security": [
+    {
+      "API Key - 1": []
+    }
+  ]
+}
