@@ -1,0 +1,44 @@
+<header>
+  <%- include('./partials/header') %>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 mx-auto mt-4">
+      <div class="card-shadow">
+        <form action="/login" method="post">
+          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+          <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" fdprocessedid="ckquzr">
+            <label for="floatingInput">Username</label>
+          </div>
+          <br>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" fdprocessedid="j4big">
+            <label for="floatingPassword">Password</label>
+          </div>
+          <div class="form-check text-start my-3">
+            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              Remember me
+            </label>
+           </div>
+          <button type="button" class="btn btn-primary w-5  py-2">Sign in</button>
+            <p class="mt-5 mb-3 text-body-secondary">©2023</p>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</div>
+  
+
+
+<footer>
+  <%- include('./partials/footer') %>
+</footer>
+    

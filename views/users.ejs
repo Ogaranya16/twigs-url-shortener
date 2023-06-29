@@ -1,0 +1,51 @@
+
+  <header>
+    <%- include('./partials/header') %> 
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 mx-auto mt-4">
+          <div class="card shadow">
+            <div class="card-header bg-primary text-center">
+              <h3 class="text-light">Create Account</h3>
+            </div>
+            <div class="card-body p-4">
+              <form action="/users" method="post" id="register-form ">
+                <div class="mb-3">
+                  <label for="userName">Username</label>
+                  <input type="text" name="userName" class="form-control form-control-lg" placeholder="Enter Username" required>
+                </div>
+                <div class="mb-3">
+                  <label for="firstName">Firstname</label>
+                  <input type="text" name="firstName" class="form-control form-control-lg" placeholder="Enter Firstname" required>
+                </div>
+                <div class="mb-3">
+                  <label for="lastName">Lastname</label>
+                  <input type="text" name="lastName" class="form-control form-control-lg" placeholder="Enter Lastname" required>
+                </div>
+                <div class="mb-3">
+                  <label for="userName">Email</label>
+                  <input type="email" name="email" class="form-control form-control-lg" placeholder="Enter email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password">Password</label>
+                  <input type="password" name="password" class="form-control form-control-lg" required>
+                </div>
+                <div class="mb-3 d-grid">
+                  <button type="submit" class="btn btn-primary btn-sm">Submit</button> 
+                  
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </main>
+  <footer>
+    <%- include('./partials/footer') %>
+  </footer>
+  
+
