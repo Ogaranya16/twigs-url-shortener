@@ -5,6 +5,25 @@ const express = require('express');
 const router = express.Router();
 
 
+exports.createProfile = (req, res, next) =>{
+    const user = new User({
+        _id: new db.Types.ObjectId(),
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password
+    })
+    user.save()
+    .then(result =>{
+        console.log(result)
+        res.status(200).json({
+            message: 'User created'
+        })
+    })
+    .catch(err =>{
+        console.log(err)
+        res.status(500).send('/500')
+    })
+}
 
 exports.getProfile = (req, res, next) =>{
     User.find()

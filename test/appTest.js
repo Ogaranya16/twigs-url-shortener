@@ -1,57 +1,34 @@
-const mocha = require('mocha');
+const assert = require('assert');
+const exp = require('constants');
+const request = require('supertest');
+const express = require('express');
+const app = express();
 
-const chai = require('chai');
+describe('Functionality Test', () => {
+  it('should return the home page', (done) => {
+    request(app)
+      .get('/')
+      .expect(200)
+      .end((err, res) => {
+        assert(res.text.includes('Twigs - Home'));
+        done(err);
+      });
+  });
 
+  it('should return the users page', (done) => {
+    request(app)
+      .get('/users')
+      .expect(200)
+      .end((err,res) => {
+        assert(res.text.includes('Twigs - Users'));
+        done(err);
+      });
+  });
 
-const chaiHttp = require('chai-http');
+  // Add more test cases to cover other endpoints and functionality
 
-
-
-const should = chai.should();
-
-
-
-chai.use(chaiHttp);
-
-describe('Urls', () => {
-    beforeEach((done) => {
-        Url.remove({}, (err) => {
-            done();
-        });
-    });
-    describe('/POST url', () => {
-        it('it should not POST a url without origUrl field', (done) => {
-            let url = {
-                origUrl: "https://www.google.com"
-            }
-            chai.request('http://localhost:5000')
-                .post('/urlShorts')
-                .send(url)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    //res.body.should.have.property('errors');
-                    //res.body.errors.should.have.property('pages');
-                    //res.body.errors.pages.should.have.property('kind').eql('required');
-                    done();
-                });
-        });
-        it('it should POST a url ', (done) => {
-            let url = {
-                origUrl: "http://www.google.com"
-            }
-            chai.request(server)
-                .post('/urlShorts')
-                .send(url)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    //res.body.should.have.property('errors');
-                    //res.body.errors.should.have.property('pages');
-                    //res.body.errors.pages.should.have.property('kind').eql('required');
-                    done();
-                });
-        });
-    });
+  after((done) => {
+    // You can perform any necessary cleanup after the tests are complete
+    done();
+  });
 });
-

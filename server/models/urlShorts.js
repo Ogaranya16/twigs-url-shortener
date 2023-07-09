@@ -19,6 +19,10 @@ const UrlSchema = new mongoose.Schema({
         required: true,
         default: shortId.generate
     },
+    qrcode: {
+        type: String,
+        required: false,
+    },
     clicks: {
         type: Number,
         required: true,
@@ -30,4 +34,4 @@ const UrlSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Url', UrlSchema);
+module.exports = mongoose.model('Url', UrlSchema)

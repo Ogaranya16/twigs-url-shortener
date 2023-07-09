@@ -21,7 +21,11 @@ router.post('/login', (req, res, next) =>{
     .exec()
     .then(user =>{
         if(user.length < 1) {
-            return res.status(401).send('/401')
+            req.session.message = {
+                type: 'danger',
+                message: "invalid username or password"
+            }
+            res.redirect('/login')
         }
         bcrypt.compare(req.body.password, user[0].password, (err, result) =>{
             if(err) {
@@ -30,24 +34,10 @@ router.post('/login', (req, res, next) =>{
                 })
             } 
             if(result) {
-                const token = jwt.sign({
-                    userName: user[0].userName,
-                    userId: user[0]._id, 
-                },process.env.JWT_KEY,
-                {
-                    expiresIn: '1h'
-                })
-                return res.status(200).json({
-                    userName: req.body.userName,
-                    token: token
-                })
-                // res.redirect('/dashboard')
-
-            }
-            if(req.body.userName === userName && req.body.password === 'admin') {
-                session = req.session;
-                session.user_id = req.body.userName;
-                console.log(req.session)
+               req.session.message = {
+                     type: 'success',
+                        message: 'Login successful'
+               }
                 res.redirect('/profile')
             }
             else {

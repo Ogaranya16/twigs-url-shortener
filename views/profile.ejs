@@ -1,48 +1,69 @@
-<header>
-    <%- include('./partials/header') %>
-</header>
-<main>
-    <!--Profile-->
 
-    <!--set up user homepage-->
+<%- include('./partials/header') %>
 
-    <!--set up user profile-->
-   <aside class="bd-sidebar">
-      <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="bdSidebar" aria-labelledby="bdSidebarOffcanvasLabel">
-        <div class="offcanvas-header border-bottom">
-          <h5 class="offcanvas-title" id="bdSidebarOffcanvasLabel">Browse docs</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdSidebar"></button>
-        </div>
-
-        <div class="offcanvas-body">
-          <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation"><ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
-      <li class="bd-links-group py-2">
-        <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold">
-            <svg class="bi me-2" style="color: var(--bs-indigo);" aria-hidden="true"><use xlink:href="#book-half"></use></svg>
-          res.send(`Hello ${req.user.userName}`);
-        </strong>
-
-        <ul class="list-unstyled fw-normal pb-2 small">
-            <li><a href="/" class="bd-links-link d-inline-block rounded">Info</a></li>
-            <li><a href="./shortUrls" class="bd-links-link d-inline-block rounded">Shorten</a></li>
-            <li><a href="/History" class="bd-links-link d-inline-block rounded">History</a></li>
-            <li><a href="/logout" class="bd-links-link d-inline-block rounded">logout</a></li>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Fifth navbar example">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+      
+    <div class="collapse navbar-collapse" id="navbarsExample05">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dashboard</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item " href="/history">History</a></li>
+          <li><a class="dropdown-item" href="/shorten">urls</a></li>
         </ul>
-      </li>
-      
-      
-    </aside>
-
-     <!--greeting message-->
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="display-1">Hello, `${userName}`</h1>
-            </div>
-        </div>
+        </li>
+      </ul>
+      <button type="submit" class="btn btn-outline-danger"><i class="fa-duotone fa-right-from-bracket"></i>logout</button>
+    </div>
+  </div>
+</nav>
 
 
-</main>
-<footer>
-    <%- include('./partials/footer') %>
-</footer>
+<div class="container-fluid">
+  <h1>Twigs Url</h1>
+  <p>Here are your shortened urls</p>
+  <form action="/shortUrls" method="POST" class="my-4 form-inline">
+    <label for="origUrl" class="sr-only">URL</label>
+      <input type="url" name="origUrl" id="origUrl" class="form-control col mr-2" placeholder="https://www.google.com" required><br>
+      <button class="btn btn-success" type="submit" >Shorten</button>
+    
+  </form>
+
+  <table class="table table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>Original Url</th>
+        <th>Short Url</th>
+        <th>Clicks</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (Array.isArray(shortUrls)) { %>
+        <% shortUrls.forEach(Url => { %>
+          <tr>
+            <td><a href="<%= Url.origUrl %>"><%= Url.origUrl %></a></td>
+            <td><a href="<%= Url.shortUrl %>"><%= Url.shortUrl %></a></td>
+            <td><%= Url.clicks %></td>
+            <td><%= Url.date %></td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<h4>Qr Code</h4>
+<p>Type the Short url below and click generate!</p>
+<form action="/qrcode" method="POST" class="my-4 form-inline">
+  <label for="shortUrl" class="sr-only">URL</label>
+    <input type="url" name="shortUrl" id="shortUrl" class="form-control col mr-2" placeholder="https://www.google.com" required><br>
+    <button class="btn btn-success" type="submit" >Generate</button>
+</form>
+<img src="<%= qrCodeDataUrl %>" alt="QR Code">
+
+<%- include('./partials/footer') %>
